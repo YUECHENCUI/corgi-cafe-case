@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Corgi Cafe · 柯基咖啡厅｜TEKUMA Case</title>
+  <meta name="description" content="Kit / TEKUMA 城市设计案例：Corgi Cafe — SF 低成本创新业态与创业保险公司的空间产品。" />
+  <style>
+    :root {
+      --cream: #f9f7f2;
+      --cream-deep: #f0ebe1;
+      --ink: #161616;
+      --muted: #6a655c;
+      --line: #d9d2c4;
+      --orange: #e85d04;
+      --orange-soft: #f4a261;
+      --orange-wash: rgba(232, 93, 4, 0.08);
+      --serif: "Songti SC", "Noto Serif CJK SC", "Source Han Serif SC", "STSong", "SimSun", Georgia, serif;
+      --sans: "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", "Helvetica Neue", Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #111;
+      color: var(--ink);
+      font-family: var(--sans);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .viewport {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      display: grid;
+      place-items: center;
+      background: #111;
+    }
+
+    .stage {
+      position: relative;
+      width: min(100vw, calc(100vh * 16 / 9));
+      height: min(100vh, calc(100vw * 9 / 16));
+      overflow: hidden;
+      background: var(--cream);
+      box-shadow: 0 20px 60px rgba(0,0,0,.45);
+      font-size: calc(min(100vw, calc(100vh * 16 / 9)) / 80);
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      padding: 1.1em 1.4em 0.85em;
+      gap: 0.7em;
+    }
+
+    /* —— Header —— */
+    .top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1em;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 0.55em;
+    }
+
+    .kicker {
+      display: flex;
+      align-items: center;
+      gap: 0.55em;
+      font-size: 0.72em;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .kicker .dot {
+      width: 0.55em;
+      height: 0.55em;
+      border-radius: 50%;
+      background: var(--orange);
+      flex-shrink: 0;
+    }
+
+    .title-block h1 {
+      font-family: var(--serif);
+      font-size: 2.35em;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      line-height: 1.15;
+      margin-top: 0.2em;
+    }
+
+    .title-block h1 .en {
+      font-family: var(--sans);
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: var(--orange);
+      margin-left: 0.25em;
+    }
+
+    .subtitle {
+      margin-top: 0.28em;
+      font-size: 0.95em;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+
+    .subtitle strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .meta-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35em;
+      justify-content: flex-end;
+      align-items: flex-start;
+      max-width: 28em;
+    }
+
+    .pill {
+      font-size: 0.68em;
+      letter-spacing: 0.06em;
+      padding: 0.35em 0.7em;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fff;
+      color: var(--ink);
+      white-space: nowrap;
+    }
+
+    .pill.accent {
+      background: var(--orange);
+      border-color: var(--orange);
+      color: #fff;
+    }
+
+    /* —— Body —— */
+    .body {
+      display: grid;
+      grid-template-columns: 1.05fr 1.35fr;
+      gap: 0.9em;
+      min-height: 0;
+    }
+
+    .visual {
+      position: relative;
+      border-radius: 0.35em;
+      overflow: hidden;
+      background: #2a241c;
+      min-height: 0;
+      display: grid;
+      grid-template-rows: 1fr auto;
+    }
+
+    .visual .hero {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 45% 40%;
+      display: block;
+    }
+
+    .visual .caption-bar {
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      padding: 1.6em 0.85em 0.7em;
+      background: linear-gradient(transparent, rgba(12,10,8,.78));
+      color: #fff;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 0.6em;
+    }
+
+    .visual .caption-bar .loc {
+      font-size: 0.78em;
+      letter-spacing: 0.04em;
+      line-height: 1.35;
+    }
+
+    .visual .caption-bar .loc em {
+      display: block;
+      font-style: normal;
+      font-size: 0.85em;
+      opacity: 0.75;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 0.15em;
+    }
+
+    .thumb-row {
+      position: absolute;
+      top: 0.55em;
+      right: 0.55em;
+      width: 28%;
+      border-radius: 0.25em;
+      overflow: hidden;
+      box-shadow: 0 6px 18px rgba(0,0,0,.35);
+      border: 2px solid rgba(255,255,255,.85);
+    }
+
+    .thumb-row img {
+      width: 100%;
+      height: auto;
+      display: block;
+      aspect-ratio: 4/5;
+      object-fit: cover;
+      object-position: center 40%;
+    }
+
+    .content {
+      display: grid;
+      grid-template-rows: auto 1fr;
+      gap: 0.65em;
+      min-height: 0;
+    }
+
+    .quote {
+      position: relative;
+      padding: 0.7em 0.9em 0.7em 1em;
+      background: var(--orange-wash);
+      border-left: 3px solid var(--orange);
+      border-radius: 0 0.25em 0.25em 0;
+    }
+
+    .quote .mark {
+      font-family: var(--serif);
+      font-size: 1.6em;
+      color: var(--orange);
+      line-height: 1;
+      position: absolute;
+      top: 0.25em;
+      left: 0.35em;
+      opacity: 0.55;
+    }
+
+    .quote p {
+      font-family: var(--serif);
+      font-size: 0.98em;
+      line-height: 1.55;
+      letter-spacing: 0.03em;
+      color: var(--ink);
+      padding-left: 0.4em;
+    }
+
+    .quote .by {
+      margin-top: 0.35em;
+      padding-left: 0.4em;
+      font-size: 0.68em;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 0.5em;
+      min-height: 0;
+    }
+
+    .card {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 0.3em;
+      padding: 0.65em 0.75em 0.6em;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25em;
+      min-height: 0;
+    }
+
+    .card .num {
+      font-family: var(--sans);
+      font-size: 0.62em;
+      letter-spacing: 0.16em;
+      color: var(--orange);
+      font-weight: 700;
+    }
+
+    .card h3 {
+      font-family: var(--serif);
+      font-size: 1.05em;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      line-height: 1.25;
+    }
+
+    .card h3 .en {
+      display: block;
+      font-family: var(--sans);
+      font-size: 0.62em;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 0.12em;
+    }
+
+    .card p {
+      font-size: 0.78em;
+      line-height: 1.45;
+      color: #3a3530;
+      letter-spacing: 0.02em;
+      margin-top: 0.15em;
+    }
+
+    .card.highlight {
+      background: linear-gradient(160deg, #fff 60%, #fff4eb);
+      border-color: #efc9a8;
+    }
+
+    /* —— Footer —— */
+    .foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1em;
+      border-top: 1px solid var(--line);
+      padding-top: 0.45em;
+      font-size: 0.62em;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+      line-height: 1.4;
+    }
+
+    .foot a {
+      color: var(--muted);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .foot .note {
+      max-width: 62%;
+    }
+
+    .foot .brand {
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .foot .brand strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    /* —— Fullscreen —— */
+    .fs-btn {
+      position: fixed;
+      right: 14px;
+      bottom: 14px;
+      z-index: 20;
+      border: 1px solid rgba(255,255,255,.25);
+      background: rgba(20,20,20,.72);
+      color: #f5f0e8;
+      font-family: var(--sans);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      padding: 8px 12px;
+      border-radius: 999px;
+      cursor: pointer;
+      backdrop-filter: blur(6px);
+    }
+
+    .fs-btn:hover { background: rgba(40,40,40,.85); }
+
+    @media print {
+      html, body { background: #fff; overflow: visible; }
+      .viewport { display: block; height: auto; }
+      .stage {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 16/9;
+        box-shadow: none;
+        font-size: 12px;
+      }
+      .fs-btn { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="viewport">
+    <article class="stage" id="stage" aria-label="Corgi Cafe case study slide">
+
+      <header class="top">
+        <div class="title-block">
+          <div class="kicker"><span class="dot" aria-hidden="true"></span>TEKUMA · CASE STUDY · SF</div>
+          <h1>柯基咖啡厅<span class="en">Corgi Cafe</span></h1>
+          <p class="subtitle">「创业保险公司」的空间产品 · <strong>The Cafe For Builders</strong> · SF’s first 24/7 cafe</p>
+        </div>
+        <div class="meta-pills" aria-label="Key facts">
+          <span class="pill accent">24/7</span>
+          <span class="pill">9 Claude Ln · FiDi</span>
+          <span class="pill">Opened Feb 13, 2026</span>
+          <span class="pill">Corgi Insurance · YC S24</span>
+        </div>
+      </header>
+
+      <div class="body">
+        <figure class="visual">
+          <img class="hero" src="assets/interior.jpg" alt="Corgi Cafe 内景：builders 在笔记本电脑前办公，墙上有柯基标识与 corgi.insure 标语" />
+          <div class="thumb-row" title="外立面 · Claude Lane">
+            <img src="assets/exterior.jpg" alt="Corgi Cafe 橙色外立面，9 Claude Lane" />
+          </div>
+          <figcaption class="caption-bar">
+            <div class="loc">
+              <em>Interior · Builders at work</em>
+              一层咖啡厅即办公磁场；桌上可见创业保险入口
+            </div>
+          </figcaption>
+        </figure>
+
+        <div class="content">
+          <blockquote class="quote">
+            <span class="mark" aria-hidden="true">“</span>
+            <p>这里想分享最近在 SF 非常火爆的低成本创新业态：Corgi Cafe 柯基咖啡厅，作为「创业保险公司」的空间产品。租下后把一层改为咖啡厅，上层为办公室；一层聚集旧金山 OPC、独立开发者、founder 在此办公，同时桌子上就为他们提供创业保险。</p>
+            <div class="by">Kit · TEKUMA Urban Designer</div>
+          </blockquote>
+
+          <div class="cards">
+            <section class="card">
+              <div class="num">01 · 业态结构</div>
+              <h3>一层磁体 + 同楼上办公<span class="en">Program Stack</span></h3>
+              <p>办公室租约附带必做零售 → 把死掉的 FiDi 临街铺面改成全天候 Builder Cafe；公司总部在同楼上办公（媒体常称 5F HQ）。</p>
+            </section>
+            <section class="card">
+              <div class="num">02 · 人群</div>
+              <h3>OPC · Indie · Founder<span class="en">Who Gathers</span></h3>
+              <p>深夜工程师与创业者的 watering hole；VC 也会在此扫人才。咖啡/茶/冰沙 + 赞助特饮，YC alum 折扣等社区钩子。</p>
+            </section>
+            <section class="card">
+              <div class="num">03 · 保险产品入口</div>
+              <h3>空间即漏斗<span class="en">Carrier in the Room</span></h3>
+              <p>母公司 Corgi Insurance：AI-native 全栈创业保险公司（持牌 carrier）。Cafe 是品牌与社区磁铁——第三空间叠监管金融产品入口。</p>
+            </section>
+            <section class="card highlight">
+              <div class="num">04 · 对灵芝道街巷启示</div>
+              <h3>1F 磁体 × 上层弹性办公<span class="en">Lingzhi Parallel</span></h3>
+              <p>映射：一层社区/业态磁体 + 上层弹性办公 +「桌上服务」（本地可替换为财税/法务/算力券/供应链）。激活暗街铺面，而非再堆空置零售。</p>
+            </section>
+          </div>
+        </div>
+      </div>
+
+      <footer class="foot">
+        <div class="note">
+          注：Kit 口述「一层咖啡厅 / 上层办公」；同楼上层办公成立，新闻稿多写 5 层 HQ。Cafe 目前更偏品牌与社区，保险销售转化仍在早期。
+          Sources:
+          <a href="https://www.corgicafe.com/" target="_blank" rel="noopener">corgicafe.com</a> ·
+          <a href="https://www.corgicafe.com/events" target="_blank" rel="noopener">events</a> ·
+          PR Newswire Feb 2026 · Forbes / WSJ / Inc. 等报道见站点活动页
+        </div>
+        <div class="brand">
+          <strong>TEKUMA</strong> · 宝安创业路案例库<br />
+          Corgi Cafe Case · editable HTML
+        </div>
+      </footer>
+    </article>
+  </div>
+
+  <button class="fs-btn" id="fsBtn" type="button" title="Fullscreen / 全屏">Fullscreen</button>
+  <script>
+    (function () {
+      var btn = document.getElementById('fsBtn');
+      function sync() {
+        btn.textContent = document.fullscreenElement ? 'Exit' : 'Fullscreen';
+      }
+      btn.addEventListener('click', function () {
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen().catch(function () {});
+        } else {
+          document.exitFullscreen();
+        }
+      });
+      document.addEventListener('fullscreenchange', sync);
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'f' || e.key === 'F') btn.click();
+      });
+    })();
+  </script>
+</body>
+</html>
