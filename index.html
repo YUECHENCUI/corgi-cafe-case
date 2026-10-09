@@ -151,23 +151,136 @@
       overflow: hidden;
       background: #2a241c;
       min-height: 0;
-      display: grid;
-      grid-template-rows: 1fr auto;
     }
 
     .visual .hero {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: 45% 40%;
+      object-position: 52% 42%;
       display: block;
+    }
+
+    /* Floor annotations — editable HTML labels */
+    .floor-tag {
+      position: absolute;
+      z-index: 3;
+      display: flex;
+      align-items: center;
+      gap: 0.45em;
+      max-width: 55%;
+      pointer-events: auto;
+    }
+
+    .floor-tag .badge {
+      flex-shrink: 0;
+      background: var(--cream);
+      color: var(--ink);
+      border: 1.5px solid rgba(22,22,22,.12);
+      border-radius: 0.28em;
+      padding: 0.45em 0.7em 0.4em;
+      box-shadow: 0 8px 22px rgba(0,0,0,.28);
+      line-height: 1.25;
+    }
+
+    .floor-tag .badge .level {
+      font-size: 0.62em;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--orange);
+      font-weight: 700;
+      margin-bottom: 0.12em;
+    }
+
+    .floor-tag .badge .zh {
+      font-family: var(--serif);
+      font-size: 1.05em;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      white-space: nowrap;
+    }
+
+    .floor-tag .badge .en {
+      display: block;
+      font-family: var(--sans);
+      font-size: 0.58em;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 0.1em;
+    }
+
+    .floor-tag .leader {
+      flex: 1;
+      height: 2px;
+      min-width: 1.2em;
+      background: linear-gradient(90deg, rgba(249,247,242,.95), rgba(249,247,242,.15));
+      border-radius: 1px;
+      position: relative;
+    }
+
+    .floor-tag .leader::after {
+      content: "";
+      position: absolute;
+      right: -0.2em;
+      top: 50%;
+      width: 0.45em;
+      height: 0.45em;
+      border-radius: 50%;
+      background: var(--cream);
+      border: 2px solid var(--orange);
+      transform: translateY(-50%);
+      box-shadow: 0 0 0 3px rgba(232,93,4,.25);
+    }
+
+    .floor-tag.upper {
+      top: 18%;
+      left: 4%;
+    }
+
+    .floor-tag.lower {
+      top: 58%;
+      left: 4%;
+    }
+
+    .floor-tag.lower .leader {
+      background: linear-gradient(90deg, rgba(249,247,242,.95), rgba(249,247,242,.15));
+    }
+
+    /* Soft highlight bands on facade zones */
+    .zone-hint {
+      position: absolute;
+      left: 28%;
+      right: 18%;
+      z-index: 2;
+      pointer-events: none;
+      border-left: 2px solid rgba(249,247,242,.55);
+      border-right: 2px solid rgba(249,247,242,.25);
+      background: linear-gradient(90deg, rgba(249,247,242,.12), transparent 40%, transparent 60%, rgba(249,247,242,.06));
+    }
+
+    .zone-hint.upper {
+      top: 12%;
+      height: 22%;
+      border-top: 2px dashed rgba(249,247,242,.45);
+      border-bottom: 2px dashed rgba(249,247,242,.35);
+    }
+
+    .zone-hint.lower {
+      top: 42%;
+      height: 38%;
+      border-top: 2px dashed rgba(249,247,242,.4);
+      border-bottom: 2px dashed rgba(249,247,242,.35);
+      background: linear-gradient(90deg, rgba(232,93,4,.1), transparent 45%, transparent 55%, rgba(232,93,4,.06));
     }
 
     .visual .caption-bar {
       position: absolute;
       left: 0; right: 0; bottom: 0;
-      padding: 1.6em 0.85em 0.7em;
-      background: linear-gradient(transparent, rgba(12,10,8,.78));
+      z-index: 4;
+      padding: 1.5em 0.85em 0.65em;
+      background: linear-gradient(transparent, rgba(12,10,8,.82));
       color: #fff;
       display: flex;
       align-items: flex-end;
@@ -195,11 +308,13 @@
       position: absolute;
       top: 0.55em;
       right: 0.55em;
-      width: 28%;
+      z-index: 5;
+      width: 26%;
       border-radius: 0.25em;
       overflow: hidden;
-      box-shadow: 0 6px 18px rgba(0,0,0,.35);
-      border: 2px solid rgba(255,255,255,.85);
+      box-shadow: 0 6px 18px rgba(0,0,0,.4);
+      border: 2px solid rgba(255,255,255,.9);
+      background: #111;
     }
 
     .thumb-row img {
@@ -209,6 +324,18 @@
       aspect-ratio: 4/5;
       object-fit: cover;
       object-position: center 40%;
+    }
+
+    .thumb-row .tip {
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      padding: 0.35em 0.4em;
+      background: rgba(12,10,8,.72);
+      color: #fff;
+      font-size: 0.5em;
+      letter-spacing: 0.08em;
+      text-align: center;
+      text-transform: uppercase;
     }
 
     .content {
@@ -402,14 +529,38 @@
 
       <div class="body">
         <figure class="visual">
-          <img class="hero" src="assets/interior.jpg" alt="Corgi Cafe 内景：builders 在笔记本电脑前办公，墙上有柯基标识与 corgi.insure 标语" />
-          <div class="thumb-row" title="外立面 · Claude Lane">
-            <img src="assets/exterior.jpg" alt="Corgi Cafe 橙色外立面，9 Claude Lane" />
+          <img class="hero" src="assets/exterior-street.png" alt="Corgi Cafe 外景：橙色柯基涂鸦立面，上层窗与下层咖啡厅入口" />
+
+          <div class="zone-hint upper" aria-hidden="true"></div>
+          <div class="zone-hint lower" aria-hidden="true"></div>
+
+          <div class="floor-tag upper">
+            <div class="badge" contenteditable="true">
+              <div class="level">Upper · L2+</div>
+              <div class="zh">上层 = 办公</div>
+              <span class="en">Office / HQ</span>
+            </div>
+            <span class="leader" aria-hidden="true"></span>
           </div>
+
+          <div class="floor-tag lower">
+            <div class="badge" contenteditable="true">
+              <div class="level">Ground · 1F</div>
+              <div class="zh">下层 = 咖啡厅</div>
+              <span class="en">Cafe · Builder Magnet</span>
+            </div>
+            <span class="leader" aria-hidden="true"></span>
+          </div>
+
+          <div class="thumb-row" title="内景 · Builders">
+            <img src="assets/interior.jpg" alt="Corgi Cafe 内景：builders 在笔记本电脑前办公" />
+            <div class="tip">Interior</div>
+          </div>
+
           <figcaption class="caption-bar">
             <div class="loc">
-              <em>Interior · Builders at work</em>
-              一层咖啡厅即办公磁场；桌上可见创业保险入口
+              <em>Exterior · 9 Claude Lane · FiDi</em>
+              外立面一眼可读：上层办公 · 下层咖啡厅社区磁体
             </div>
           </figcaption>
         </figure>
@@ -425,7 +576,7 @@
             <section class="card">
               <div class="num">01 · 业态结构</div>
               <h3>一层磁体 + 同楼上办公<span class="en">Program Stack</span></h3>
-              <p>办公室租约附带必做零售 → 把死掉的 FiDi 临街铺面改成全天候 Builder Cafe；公司总部在同楼上办公（媒体常称 5F HQ）。</p>
+              <p>外立面即叙事：下层 Corgi Cafe（24/7 社区磁体），上层同楼办公 / HQ。死掉的 FiDi 临街铺面被改成全天候 Builder 空间。</p>
             </section>
             <section class="card">
               <div class="num">02 · 人群</div>
